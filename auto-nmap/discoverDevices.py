@@ -25,10 +25,12 @@ def nmap_ping_scan(ip: str) -> None:
     print(found_hosts)
     print(f"Found {len(found_hosts)} hosts!")
 
+
 def main():
     default_gateway_ip = get_default_gateway_ip()
     ip_range = ip_to_ip_range(default_gateway_ip)
     nmap_ping_scan(ip_range)
+    print("Done!")
 
 
 if __name__ == "__main__":
