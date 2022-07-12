@@ -1,4 +1,3 @@
-from inspect import _void
 import nmap
 import netifaces
 
