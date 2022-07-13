@@ -2,19 +2,35 @@ import argparse
 import netifaces
 import nmap
 
-from discoverDevices import *
 
-def nmap_port_scan():    
+def parse_cmdline():
+    """CLI tool to add parameters to the script."""
+    parser = argparse.ArgumentParser(description='discoverPorts of a device.')
+    parser.add_argument("ip", metavar="IP_ADRESS",
+                        nargs=1, help="IP Address of target.")
+    parser.add_argument("ps", metavar="PORTS",
+                        nargs=1, help="Target ports.")
+    args = parser.parse_args()
+
+    return args
+
+
+def nmap_port_scan(ip_address: str, ports: int) -> None:
     """Ascertain IP address & port types/number and port scan of host(s)"""
     nma = nmap.PortScanner()
-    ip_address = input('Please input an IP address for scanning: ')
-    ports = input('Please input the ports you are scanning; i.e., 1, 1-1000, 5-25: ')
     nma.scan(ip_address, ports)
+    print("Retrieving data...")
     print(nma.csv())
 
-def main():
-   nmap_port_scan()
 
+def main():
+    args = parse_cmdline()
+    ip_address = args.ip[0]
+    ports = args.ps[0]
+    print(f"printing cmd line'd ip: {ip_address}, {ports}")
+    nmap_port_scan(ip_address=ip_address, ports=ports)
+    print("Done!")
+    
 
 if __name__ == "__main__":
     main()
