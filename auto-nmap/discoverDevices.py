@@ -1,5 +1,5 @@
-import nmap
 import netifaces
+import nmap
 
 
 def get_default_gateway_ip() -> str:
