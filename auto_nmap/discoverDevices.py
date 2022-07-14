@@ -35,7 +35,7 @@ def get_default_gateway_ip() -> str:
         return default_gateway_ip
     except KeyError:
         raise Exception(
-            print("Could not find default gateway. Are you connected to the internet?"))
+            print("\nOh no, an error!\n\nCould not find default gateway. Are you connected to the internet?\n"))
 
 
 def ip_to_ip_range(ip: str) -> str:
