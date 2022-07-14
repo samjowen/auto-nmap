@@ -154,4 +154,4 @@ dmypy.json
 cython_debug/
 
 #auto-nmap
-/auto_nmap/txt-files/*
+/auto_nmap/txt-files/*.txt

@@ -1,0 +1,1 @@
+This is the output folder that is created by using discoverDevices and using the --output argument.
