@@ -2,11 +2,6 @@ import argparse
 
 import nmap
 
-"""
-Sample command:
-python discoverPorts.py .../Users/samjowen/Desktop/auto-nmap/auto-nmap/auto-nmap/txt-files/ips.txt --ports 22
-"""
-
 
 def parse_cmdline():
     """CLI tool to add parameters to the script."""
