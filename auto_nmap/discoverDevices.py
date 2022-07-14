@@ -1,7 +1,9 @@
-import netifaces
-import nmap
 import argparse
 import os
+import sys
+
+import netifaces
+import nmap
 
 OUTPUT_FILEPATH = os.path.realpath(
     os.path.join(os.path.dirname(__file__), 'txt-files/'))
@@ -33,7 +35,7 @@ def get_default_gateway_ip() -> str:
         return default_gateway_ip
     except KeyError:
         raise Exception(
-            "Could not find default gateway. Are you connected to the internet?")
+            print("Could not find default gateway. Are you connected to the internet?"))
 
 
 def ip_to_ip_range(ip: str) -> str:
@@ -57,14 +59,16 @@ def nmap_ping_scan(ip: str) -> list[str]:
 
 def main():
     args = parse_cmdline()
-    if args == None:
+    # If the arguments provided are not greater than 1, i.e., 0, do this default method.
+    if not len(sys.argv) > 1:
+        print("No arguments given. Defaulting to cmd line output.")
         """If no arguments are provided, default to printing the hosts to the command line."""
         default_gateway_ip = get_default_gateway_ip()
         ip_range = ip_to_ip_range(default_gateway_ip)
         nmap_ping_scan(ip_range)
         print("Done!")
 
-    elif args.output:
+    elif args.output:  # If the user specified an output file, write the hosts to that file.
         """If an output filepath is provided, write the hosts to the file."""
         default_gateway_ip = get_default_gateway_ip()
         ip_range = ip_to_ip_range(default_gateway_ip)
