@@ -17,22 +17,37 @@ def parse_cmdline():
     return args
 
 
+def convert_list_of_ips_to_smallest_and_largest(ip_addresses: list[str]) -> str:
+    """Convert a list of IP addresses to the smallest and largest IP address."""
+    smallest_ip = ip_addresses[0]
+    largest_ip = ip_addresses[-1]
+    smallest_ip_host = smallest_ip.split('.')
+    largest_ip_host = largest_ip.split('.')
+    small_host = smallest_ip_host[-1]
+    large_host = largest_ip_host[-1]
+    small_host = small_host.strip()
+    large_host = large_host.strip()
+    ip_str = smallest_ip.split('.')
+    ip_str[-1] = small_host + '-' + large_host
+    ip_str = '.'.join(ip_str)
+
+    return ip_str
+
+
 def nmap_port_scan(ip_address: str, ports: int) -> None:
     """Ascertain open port(s) for a single host."""
     nma = nmap.PortScanner()
     nma.scan(hosts=ip_address, ports=ports)
-    print("Retrieving data...")
+    print(f"Scanning ip_address: {ip_address} for port(s): {ports}.")
     print(nma.csv())
 
 
 def nmap_port_scan_multihost(ip_address: str, ports: int) -> None:
     """Ascertain open port(s) for many hosts from a line separated text file."""
     nma = nmap.PortScanner()
-    for i in ip_address:
-        print(
-            f"Scanning host {i} for port(s) {ports} ({ip_address.index(i) + 1} of {len(ip_address)} hosts).")
-        nma.scan(hosts=i, ports=ports)
-        print(nma.csv())
+    print(f"Scanning ip_addresses: {ip_address} for port(s): {ports}.")
+    nma.scan(hosts=ip_address, ports=ports)
+    print(nma.csv())
 
 
 def main():
@@ -52,6 +67,9 @@ def main():
         with open(filepath) as f:
             for line in f:
                 ip_addresses.append(line)
+        ip_addresses = convert_list_of_ips_to_smallest_and_largest(
+            ip_addresses)
+        print(ip_addresses)
         nmap_port_scan_multihost(ip_address=ip_addresses, ports=ports)
         print("Done!")
 

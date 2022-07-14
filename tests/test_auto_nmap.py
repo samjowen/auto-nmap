@@ -4,6 +4,7 @@ import pathlib
 import pytest
 from auto_nmap import __version__
 from auto_nmap.discoverDevices import get_default_gateway_ip, ip_to_ip_range
+from auto_nmap.discoverPorts import convert_list_of_ips_to_smallest_and_largest
 from mock import Mock
 
 ROOT_DIR = os.path.realpath(os.path.join(os.path.dirname(__file__), '..',))
@@ -17,7 +18,9 @@ def test_version():
 
 
 """Start testing of discoverDevices.py"""
-
+def test_convert_list_of_ips_to_smallest_and_largest(script_runner):
+    """Test the convert_list_of_ips_to_smallest_and_largest function. This should return one address range."""
+    assert convert_list_of_ips_to_smallest_and_largest(['192.168.0.1', '192.168.0.55']) == '192.168.0.1-55'
 
 def test_ip_to_ip_range():
     """Test the ip_to_ip_range function. This should remove the the host part of the IP address and replace it with 0-255."""
