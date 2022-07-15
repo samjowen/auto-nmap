@@ -5,7 +5,7 @@ import sys
 import netifaces
 import nmap
 
-OUTPUT_FILEPATH = os.path.realpath(
+TXT_OUTPUT_FILEPATH = os.path.realpath(
     os.path.join(os.path.dirname(__file__), 'txt-files/'))
 
 
@@ -20,7 +20,7 @@ def parse_cmdline():
 
 def write_ips_to_file(found_hosts: list[str], filename: str) -> None:
     """Write the found hosts to a file."""
-    f = open(OUTPUT_FILEPATH + "/" + filename, 'w+')
+    f = open(TXT_OUTPUT_FILEPATH + "/" + filename, 'w+')
     for host in found_hosts:
         f.write(host + '\n')
     f.close()

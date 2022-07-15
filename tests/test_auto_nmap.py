@@ -4,7 +4,7 @@ import pathlib
 import pytest
 from auto_nmap import __version__
 from auto_nmap.discoverDevices import get_default_gateway_ip, ip_to_ip_range
-from auto_nmap.discoverPorts import convert_list_of_ips_to_smallest_and_largest
+from auto_nmap.discoverPorts import convert_list_of_ips_to_smallest_and_largest, parse_cmdline
 from mock import Mock
 
 ROOT_DIR = os.path.realpath(os.path.join(os.path.dirname(__file__), '..',))
@@ -54,3 +54,8 @@ def test_output_ips_to_text_file(script_runner):
     """Check if the output file exists."""
     file = pathlib.Path(OUTPUT_DIR + "/test.txt")
     assert file.exists()
+
+"""Start testing of discoverPorts.py"""
+
+
+

@@ -1,0 +1,1 @@
+This is the output folder that is created by using discoverPorts and using the --output and --list arguments.

@@ -25,3 +25,4 @@ Use the command:
 <h3> discoverPorts </h3>
 <li> <code> poetry run discoverPorts .../txt-files/device-ips-on-my-wifi.txt --ports 22 </code> (IP list scanning mode)
 <li> <code> poetry run discoverPorts --i 192.168.1.1 --ports 22-999 </code> (single IP scanning mode)
+<li> <code> poetry run discoverPorts --list .../txt-files/lieksa.txt --ports 1-888 --output lieksa </code> (IP list  port scanning mode)
