@@ -20,10 +20,9 @@ def parse_cmdline():
 
 def write_ips_to_file(found_hosts: list[str], filename: str) -> None:
     """Write the found hosts to a file."""
-    f = open(TXT_OUTPUT_FILEPATH + "/" + filename, 'w+')
-    for host in found_hosts:
-        f.write(host + '\n')
-    f.close()
+    with open(TXT_OUTPUT_FILEPATH + "/" + filename, 'w+') as f:
+        for host in found_hosts:
+            f.write(host + '\n')
 
 
 def get_default_gateway_ip() -> str:
