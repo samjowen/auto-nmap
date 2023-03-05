@@ -1,30 +1,36 @@
+from io import StringIO
+
 import argparse
 import os
-import csv
 import nmap
 import pandas as pd
-from io import StringIO
+
 
 TXT_OUTPUT_FILEPATH = os.path.realpath(
     os.path.join(os.path.dirname(__file__), 'txt-files/'))
 CSV_OUTPUT_FILEPATH = os.path.realpath(
     os.path.join(os.path.dirname(__file__), 'csv-files/'))
 
+
 def parse_cmdline():
     """CLI tool to add parameters to the script."""
     parser = argparse.ArgumentParser(description='discoverPorts of a device.')
 
     parser.add_argument("--ip", metavar="IP_ADDRESS",
-                        nargs=1, help="IP Address of target.", required=False, default=None, type=str)
+                        nargs=1, help="IP Address of target.",
+                        required=False, default=None, type=str)
 
     parser.add_argument("--ports", metavar="PORTS",
-                        nargs=1, help="Target ports.", required=True, default=None, type=str)
+                        nargs=1, help="Target ports.",
+                        required=True, default=None, type=str)
 
     parser.add_argument("--list", metavar="FILEPATH",
-                        nargs=1, help="Filepath to .txt file of IP addresses to scan.", required=False, default=None, type=str) 
+                        nargs=1, help="Filepath to .txt file of IP addresses to scan.",
+                        required=False, default=None, type=str)
 
     parser.add_argument("--output", metavar="OUTPUT_FILEPATH",
-                            nargs=1, help="Filepath to .csv file output of the scan.", required=False, default=None, type=str)
+                        nargs=1, help="Filepath to .csv file output of the scan.",
+                        required=False, default=None, type=str)
 
     args = parser.parse_args()
 
@@ -67,21 +73,22 @@ def nmap_port_scan_multihost_legacy(ip_address: str, ports: str) -> None:
 def nmap_port_scan_multihost(ip_address: list[str], ports: str, output: str) -> None:
     """CSV Manipulation here."""
     nma = nmap.PortScanner()
-    list_of_dfs = []
+    list_of_data_frames = []
 
     for i in ip_address:
         print(f"Scanning ip_address: {i} for port(s): {ports}.")
         nma.scan(hosts=i, ports=ports)
-        csvStringIO = StringIO(nma.csv())
-        df = pd.read_csv(csvStringIO, sep=";", header=0)
-        list_of_dfs.append(df)
+        csv_string_io = StringIO(nma.csv())
+        data_frame = pd.read_csv(csv_string_io, sep=";", header=0)
+        list_of_data_frames.append(data_frame)
 
-    new_df = pd.concat(list_of_dfs, ignore_index=True)
-    with open(f"{CSV_OUTPUT_FILEPATH}/{output}.csv", "w", newline='\n') as myfile:
-        new_df.to_csv(myfile, sep=",", index=False)
+    new_data_frame = pd.concat(list_of_data_frames, ignore_index=True)
+    with open(f"{CSV_OUTPUT_FILEPATH}/{output}.csv", "w", newline='\n', encoding="UTF8") as myfile:
+        new_data_frame.to_csv(myfile, sep=",", index=False)
 
 
 def main():
+    """Main function to run the script."""
     # Initialising the list of ip_addresses so we can use it later in the script.
     ip_addresses = []
     args = parse_cmdline()
@@ -95,12 +102,12 @@ def main():
 
     if args.list:  # If a list of IP addresses is provided, scan each one.
         filepath = args.list[0]
-        with open(filepath) as f:
-            for line in f:
+        with open(filepath, encoding="UTF8") as file:
+            for line in file:
                 ip_addresses.append(line)
-        nmap_port_scan_multihost(ip_address=ip_addresses, ports=ports, output=args.output[0])
+        nmap_port_scan_multihost(
+            ip_address=ip_addresses, ports=ports, output=args.output[0])
         print("Done!")
-
 
 
 if __name__ == "__main__":
