@@ -1,6 +1,7 @@
-<h1> auto_nmap: A Swift Solution for Network Scanning </h1>
+<h1> auto_nmap</h1>
 
-Immerse yourself in the simplified experience of network scanning with auto_nmap, a robust Python-based tool that brings an intuitive and efficient approach to network device and port discovery. Whether you're a seasoned network engineer or a beginner stepping into the realm of network scanning, auto_nmap is built to make your journey seamless.
+A Python-based tool that brings an intuitive approach to network device and port discovery.
+
 <h2> Installation </h2>
 
 Our tool employs Poetry, a powerful Python dependency management system that facilitates smooth installation and package management.
@@ -39,5 +40,3 @@ The methods in the Scan class include:
     nmap_ping_scan: Executes an nmap ping scan on a given IP or IP range, returning the found hosts.
     write_ip_addresss_to_file: Stores the found hosts into a specified file.
     nmap_port_scan_multihost: Conducts an nmap port scan on multiple hosts and records the results into a specified file.
-
-Welcome aboard the auto_nmap journey. Brace yourself for a streamlined network scanning experience.
